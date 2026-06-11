@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>កម្រងសំណួរនិងលំហាត់វាស់ស្ទង់សមត្ថភាព</title>
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;700&family=Moul&display=swap');
+        
+        body {
+            font-family: 'Kantumruy Pro', sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 20px;
+            color: #1e293b;
+        }
+        .exam-container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px double #1e3a8a;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .kingdom {
+            font-family: 'Moul', sans-serif;
+            font-size: 16px;
+            margin: 0 0 5px 0;
+            color: #1e3a8a;
+        }
+        .exam-title {
+            font-family: 'Moul', sans-serif;
+            font-size: 18px;
+            color: #b91c1c;
+            margin: 20px 0 5px 0;
+            line-height: 1.6;
+        }
+        .author {
+            font-size: 14px;
+            font-weight: bold;
+            color: #334155;
+            margin-top: 5px;
+        }
+        .student-info-box {
+            background-color: #f1f5f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            border: 1px solid #e2e8f0;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .input-group label {
+            font-weight: bold;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: #334155;
+        }
+        .input-group input {
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-family: 'Kantumruy Pro', sans-serif;
+            font-size: 14px;
+            outline: none;
+        }
+        .input-group input:focus {
+            border-color: #1e3a8a;
+        }
+        .sticky-bar {
+            position: sticky;
+            top: 10px;
+            background: #fff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            z-index: 1000;
+            border-left: 6px solid #1e3a8a;
+        }
+        .question-card {
+            display: none;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+        .question-card.active {
+            display: block;
+        }
+        .question-card:hover {
+            border-color: #1e3a8a;
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.05);
+        }
+        .question-text {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 18px;
+            color: #0f172a;
+            line-height: 1.8;
+        }
+        .points {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: normal;
+        }
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 10px;
+        }
+        @media (max-width: 650px) {
+            .options-container { grid-template-columns: 1fr; }
+            .student-info-box { grid-template-columns: 1fr; }
+        }
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 15px;
+        }
+        .option-label:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+        .option-label input {
+            margin-right: 12px;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+        .solution-box {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f0fdf4;
+            border-left: 4px solid #16a34a;
+            border-radius: 6px;
+            font-size: 14.5px;
+            line-height: 1.7;
+            color: #1e293b;
+        }
+        .solution-title {
+            font-weight: bold;
+            color: #16a34a;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+        
+        .navigation-box {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            gap: 15px;
+        }
+        .nav-btn {
+            padding: 12px 25px;
+            background: #64748b;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Kantumruy Pro', sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .nav-btn:hover {
+            background: #475569;
+        }
+        .nav-btn.next-btn {
+            background: #2563eb;
+        }
+        .nav-btn.next-btn:hover {
+            background: #1d4ed8;
+        }
+        
+        .submit-btn {
+            display: none;
+            width: 100%;
+            padding: 16px;
+            background: #1e3a8a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Kantumruy Pro', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(30, 58, 138, 0.15);
+            transition: background 0.3s;
+        }
+        .submit-btn:hover {
+            background: #1d4ed8;
+        }
+        .result-box {
+            display: none;
+            background: #eff6ff;
+            border: 2px solid #2563eb;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .result-title {
+            font-family: 'Moul', sans-serif;
+            color: #1e3a8a;
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+        .grade-badge {
+            display: inline-block;
+            font-size: 36px;
+            font-weight: bold;
+            padding: 5px 30px;
+            border-radius: 12px;
+            margin: 15px 0;
+            font-family: sans-serif;
+        }
+        .grade-A { background-color: #d1fae5; color: #065f46; border: 2px solid #34d399; }
+        .grade-B { background-color: #e0f2fe; color: #075985; border: 2px solid #38bdf8; }
+        .grade-C { background-color: #fef9c3; color: #854d0e; border: 2px solid #facc15; }
+        .grade-D { background-color: #ffedd5; color: #9a3412; border: 2px solid #fb923c; }
+        .grade-E { background-color: #f3e8ff; color: #6b21a8; border: 2px solid #c084fc; }
+        .grade-F { background-color: #fee2e2; color: #991b1b; border: 2px solid #f87171; }
+
+        .correct-flash { background: #d1fae5 !important; border-color: #10b981 !important; }
+        .incorrect-flash { background: #fee2e2 !important; border-color: #ef4444 !important; }
+    </style>
+<a href="index.html" style="padding: 8px 16px; background: #e2e8f0; color: #333; text-decoration: none; border-radius: 5px; font-family: sans-serif;">
+    ⬅ ថយក្រោយ
+</a>
+</head>
+<body>
+
+    <div class="exam-container">
+        <div class="header">
+            <div class="kingdom">ព្រះរាជាណាចក្រកម្ពុជា</div>
+            <div class="kingdom" style="font-size: 13px;">ជាតិ សាសនា ព្រះមហាក្សត្រ</div>
+<div class="exam-title">វិញ្ញាសាវាស់ស្ទង់សមត្ថភាពសិស្ស ( <span id="lesson-id"></span> )</div>
+
+            <div class="author">រៀបរៀង និងផ្ទៀងផ្ទាត់ដោយ៖ លោកគ្រូ រស់ មករា</div>
+        </div>
+
+        <div class="student-info-box" id="infoBox">
+            <div class="input-group">
+                <label for="studentName">នាមត្រកូល និងនាមខ្លួនបេក្ខជន *</label>
+                <input type="text" id="studentName" placeholder="តើអ្នកឈ្មោះអ្វី?" required>
+            </div>
+            <div class="input-group">
+                <label for="studentClass">ថ្នាក់/បន្ទប់សិក្សា *</label>
+                <input type="text" id="studentClass" placeholder="តើអ្នករៀនថ្នាក់ណា?" required>
+            </div>
+        </div>
+
+        <div class="sticky-bar">
+            <div style="font-weight: bold; color: #1e3a8a;" id="progressDisplay">លំហាត់ទី ១/--</div>
+            <div style="font-weight: bold; color: #1e3a8a;">ពិន្ទុរួម៖ <span id="totalPointsDisplay">0</span></div>
+        </div>
+
+        <div class="result-box" id="resultBox">
+            <div class="result-title">លទ្ធផលប្រឡង</div>
+
+            <p id="studentResultName" style="font-weight: bold; font-size: 16px; margin-bottom: 5px;"></p>
+<p style="font-size: 16px; color: #475569; font-weight: bold; margin: 5px 0 15px 0;">
+                ⏱️ ចំណាយពេល៖ <span id="timeSpentDisplay" style="color: #b91c1c;"></span>
+            </p>
+            <p style="font-size: 24px; color: #1e293b; font-weight: bold; margin: 10px 0 5px 0;">ពិន្ទុទទួលបាន៖ <span id="scoreDisplay">0</span> / <span id="maxPointsDisplay">0</span> (<span id="percentDisplay">0</span>%)</p>
+            
+            
+
+            <div><span id="gradeDisplay" class="grade-badge">F</span></div>
+            <p id="gradeComment" style="font-weight: bold; color: #475569; font-size: 15px; margin-bottom: 15px;"></p>
+            
+            <p style="color: #16a34a; font-weight: bold; margin-top: 12px; border-top: 1px dashed #cbd5e1; padding-top: 15px;">👇 សូមពិនិត្យវិធីសាស្ត្រដោះស្រាយលម្អិតនៅខាងក្រោមសំនួរនីមួយៗ!</p>
+        </div>
+
+        <form id="quizForm" onsubmit="submitExam(event)">                    
+            <div id="questionsContainer">                
+                
+<div class="question-card" data-qindex="101">
+    <div class="question-text">
+        <span class="q-number"></span> រកខួបតូចបំផុត $p$ នៃអនុគមន៍ $f(x) = \sin\left(\frac{2x}{3}\right) + \cos\left(\frac{3x}{4}\right)$។
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $12\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $24\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $6\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> $\frac{24\pi}{17}$</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        - ខួបនៃ $\sin\left(\frac{2x}{3}\right)$ គឺ $p_1 = \frac{2\pi}{2/3} = 3\pi$<br>
+        - ខួបនៃ $\cos\left(\frac{3x}{4}\right)$ គឺ $p_2 = \frac{2\pi}{3/4} = \frac{8\pi}{3}$<br>
+        - ខួបសរុប $p = BCNN\left(3\pi, \frac{8\pi}{3}\right) = BCNN\left(\frac{9\pi}{3}, \frac{8\pi}{3}\right) = \frac{BCNN(9,8)\pi}{3} = \frac{72\pi}{3} = 24\pi$។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="102">
+    <div class="question-text">
+        <span class="q-number"></span> អនុគមន៍ $f(x) = x - [x]$ ដែល $[x]$ ជាផ្នែកចំនួនគត់នៃ $x$។ តើ $f$ ជាអនុគមន៍ខួបដែលមានខួបតូចបំផុត $p$ ស្មើនឹងប៉ុន្មាន?
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $0.5$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $1$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $2$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> មិនមែនជាអនុគមន៍ខួបទេ</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        យើងដឹងថាផ្នែកប្រភាគ $f(x) = \{x\} = x - [x]$។ តាមលក្ខណៈនៃផ្នែកចំនួនគត់ $[x+1] = [x] + 1$។<br>
+        នាំឱ្យ $f(x+1) = (x+1) - [x+1] = x + 1 - ([x] + 1) = x - [x] = f(x)$។ ដូចនេះខួបតូចបំផុតគឺ $p = 1$។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="103">
+    <div class="question-text">
+        <span class="q-number"></span> បើគ្រប់ $x \in \mathbb{R}$ គេមាន $f(x+2) + f(x) = 0$។ គណនាតម្លៃនៃ $f(2026)$ បើដឹងថា $f(2) = 5$។
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $-5$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $5$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $0$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> $2026$</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        ពីសមីការ $f(x+2) = -f(x)$ នាំឱ្យ $f(x+4) = -f(x+2) = -(-f(x)) = f(x)$ ដូចនេះ $f$ មានខួប $p = 4$។<br>
+        ដោយសារ $2026 = 2 + 2024 = 2 + 506 \times 4$ នាំឱ្យ $f(2026) = f(2) = 5$។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="104">
+    <div class="question-text">
+        <span class="q-number"></span> រកខួបតូចបំផុត $p$ នៃអនុគមន៍ $f(x) = \tan(3x) \cdot \cot(3x)$ លើដែនកំណត់របស់វា។
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $\frac{\pi}{3}$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $\frac{\pi}{6}$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> គ្មានខួបទេព្រោះវាស្មើ ១ ជានិច្ច</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        ទោះបីជា $f(x) = 1$ លើដែនកំណត់ក៏ដោយ ក៏ដែនកំណត់របស់វាអាស្រ័យនឹង $\tan(3x)$ និង $\cot(3x)$ ដែរ។<br>
+        ដែនកំណត់គឺ $3x \neq \frac{k\pi}{2} \Rightarrow x \neq \frac{k\pi}{6}$។ ក្រាហ្វនៃអនុគមន៍នេះជាចំណុចដាច់ៗដែលមានតម្លៃ $1$ ហើយវានឹងត្រឡប់មកសភាពដើមរាល់ប្រវែង $p = \frac{\pi}{6}$។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="105">
+    <div class="question-text">
+        <span class="q-number"></span> រកខួបតូចបំផុត $p$ នៃអនុគមន៍ $f(x) = \cos(\sin x)$។
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $2\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $\frac{\pi}{2}$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> $4\pi$</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        យើងពិនិត្យ $f(x+\pi) = \cos(\sin(x+\pi)) = \cos(-\sin x) = \cos(\sin x) = f(x)$ (ព្រោះកូស៊ីនុសជាអនុគមន៍គូ)។ ដូចនេះខួបតូចបំផុតគឺ $p = \pi$។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="106">
+    <div class="question-text">
+        <span class="q-number"></span> រកខួបតូចបំផុត $p$ នៃអនុគមន៍ $f(x) = \sin^4 x + \cos^4 x$។
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $2\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $\frac{\pi}{2}$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> $\frac{\pi}{4}$</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        យើងអាចបំប្លែង៖ $f(x) = (\sin^2 x + \cos^2 x)^2 - 2\sin^2 x\cos^2 x = 1 - \frac{1}{2}(2\sin x\cos x)^2 = 1 - \frac{1}{2}\sin^2(2x) = 1 - \frac{1}{2}\left(\frac{1-\cos(4x)}{2}\right)$។ អនុគមន៍ $\cos(4x)$ មានខួប $p = \frac{2\pi}{4} = \frac{\pi}{2}$។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="107">
+    <div class="question-text">
+        <span class="q-number"></span> បើគ្រប់ $x \in \mathbb{R}$, $f(x+3) = \frac{f(x)-5}{f(x)+1}$។ រកខួប $p$ នៃអនុគមន៍ $f$។
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $3$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $6$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $12$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> $9$</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        - $f(x+6) = \frac{f(x+3)-5}{f(x+3)+1} = \frac{\frac{f(x)-5}{f(x)+1}-5}{\frac{f(x)-5}{f(x)+1}+1} = \frac{-4f(x)-10}{2f(x)-4} = \frac{2f(x)+5}{2-f(x)}$<br>
+        - $f(x+12) = \frac{2f(x+6)+5}{2-f(x+6)} = \dots = f(x)$។ ដូចនេះខួបគឺ $p = 4 \times 3 = 12$។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="108">
+    <div class="question-text">
+        <span class="q-number"></span> រកខួបតូចបំផុត $p$ នៃអនុគមន៍ $f(x) = \sin(\sqrt{3}x) + \cos(x)$។
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $2\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $2\sqrt{3}\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> $6\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> គ្មានខួបទេ</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        - ខួបនៃ $\sin(\sqrt{3}x)$ គឺ $p_1 = \frac{2\pi}{\sqrt{3}}$ ហើយខួបនៃ $\cos(x)$ គឺ $p_2 = 2\pi$។<br>
+        - ផលធៀប $\frac{p_1}{p_2} = \frac{2\pi/\sqrt{3}}{2\pi} = \frac{1}{\sqrt{3}}$ ជាចំនួនអសនិទាន។ ដូចនេះផលបូកអនុគមន៍ទាំងពីរមិនមែនជាអនុគមន៍ខួបឡើយ។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="109">
+    <div class="question-text">
+        <span class="q-number"></span> រកខួបតូចបំផុត $p$ នៃអនុគមន៍ $f(x) = (-1)^{[x]}$ ដែល $[x]$ ជាផ្នែកចំនួនគត់នៃ $x$។
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $1$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $2$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $4$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> មិនមែនជាអនុគមន៍ខួបទេ</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        យើងពិនិត្យ $f(x+2) = (-1)^{[x+2]} = (-1)^{[x]+2} = (-1)^{[x]} \cdot (-1)^2 = (-1)^{[x]} = f(x)$។ ដូចនេះខួបតូចបំផុតគឺ $p = 2$ (ព្រោះបើ $p=1$, $(-1)^{[x+1]} = -(-1)^{[x]} \neq f(x)$)។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="110">
+    <div class="question-text">
+        <span class="q-number"></span> រកខួបតូចបំផុត $p$ នៃអនុគមន៍ $f(x) = \frac{\sin(x) + \sin(3x)}{\cos(x) + \cos(3x)}$។
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $2\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $\frac{\pi}{2}$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> $\frac{\pi}{4}$</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        ប្រើរូបមន្តបំប្លែងផលបូកទៅជាផលគុណ៖<br>
+        $f(x) = \frac{2\sin(2x)\cos(x)}{2\cos(2x)\cos(x)} = \tan(2x)$។ អនុគមន៍ $\tan(2x)$ មានខួប $p = \frac{\pi}{2}$។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="111">
+    <div class="question-text">
+        <span class="q-number"></span> បើអនុគមន៍ $f(x)$ មានខួប $p = 5$ គណនាតម្លៃនៃព្រំដែនសមាហរណកម្ម $\int_{0}^{15} f(x) \, dx$ បើគេដឹងថា $\int_{0}^{5} f(x) \, dx = 4$។
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $4$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $8$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $12$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> $20$</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        តាមលក្ខណៈអាំងតេក្រាលនៃអនុគមន៍ខួប៖ $\int_{0}^{np} f(x) \, dx = n \int_{0}^{p} f(x) \, dx$។<br>
+        នៅទីនេះ $p = 5, n = 3$ (ព្រោះ $15 = 3 \times 5$) នាំឱ្យសរុបគឺ $3 \times 4 = 12$។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="112">
+    <div class="question-text">
+        <span class="q-number"></span> រកខួបតូចបំផុត $p$ នៃអនុគមន៍ $f(x) = \sin^6 x + \cos^6 x$។
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $2\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $\frac{\pi}{2}$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> $\frac{\pi}{6}$</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        បំប្លែងតាមឯកលក្ខណភាព៖ $f(x) = 1 - 3\sin^2 x\cos^2 x = 1 - \frac{3}{4}\sin^2(2x) = 1 - \frac{3}{4}\left(\frac{1-\cos(4x)}{2}\right)$។ ដូចនេះខួបគឺអាស្រ័យនឹង $\cos(4x)$ ដែលមាន $p = \frac{2\pi}{4} = \frac{\pi}{2}$។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="113">
+    <div class="question-text">
+        <span class="q-number"></span> បើគ្រប់ $x \in \mathbb{R}$ គេមាន $f(x+1) + f(x+3) = f(x)$។ បង្ហាញថា $f$ ជាអនុគមន៍ខួបដែលមានខួប $p$ ស្មើនឹង៖
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $3$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $4$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> $6$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $8$</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        ជំនួស $x \to x+1 \Rightarrow f(x+2) + f(x+4) = f(x+1)$<br>
+        ជំនួស $x \to x+3 \Rightarrow f(x+4) + f(x+6) = f(x+3)$<br>
+        បូកសមីការទាំងពីរ៖ $f(x+2) + 2f(x+4) + f(x+6) = f(x+1)+f(x+3) = f(x)$។ តាមលក្ខណៈបន្តបន្ទាប់ យើងនឹងទាញបាន $f(x+8) = f(x)$ នាំឱ្យខួប $p = 8$។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="114">
+    <div class="question-text">
+        <span class="q-number"></span> រកខួបតូចបំផុត $p$ នៃអនុគមន៍ $f(x) = |\cos x| + |\sin x|$។
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $2\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $\frac{\pi}{2}$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> $\frac{\pi}{4}$</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        ពិនិត្យ $f\left(x+\frac{\pi}{2}\right) = \left|\cos\left(x+\frac{\pi}{2}\right)\right| + \left|\sin\left(x+\frac{\pi}{2}\right)\right| = |-\sin x| + |\cos x| = |\sin x| + |\cos x| = f(x)$។ ដូចនេះខួបតូចបំផុតគឺ $p = \frac{\pi}{2}$។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="115">
+    <div class="question-text">
+        <span class="q-number"></span> រកខួបតូចបំផុត $p$ នៃអនុគមន៍ $f(x) = \sin(\pi x) - [ \pi x ]$។
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $1$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $2$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> $2\pi$</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        - អនុគមន៍ $\sin(\pi x)$ មានខួប $p_1 = \frac{2\pi}{\pi} = 2$<br>
+        - អនុគមន៍ $\pi x - [\pi x] = \{\pi x\}$ មានខួប $p_2 = \frac{1}{\pi}$<br>
+        - ក៏ប៉ុន្តែបើយើងពិនិត្យតួសរុប $f(x+2) = \sin(\pi x + 2\pi) + \{\pi x + 2\pi\} = \sin(\pi x) + \{\pi x\} = f(x)$។ ដូចនេះខួបសរុបគឺ $p = 2$។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="116">
+    <div class="question-text">
+        <span class="q-number"></span> រកខួបតូចបំផុត $p$ នៃអនុគមន៍ $f(x) = \sqrt{\sin^2(3x)}$។
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $\frac{2\pi}{3}$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $\frac{\pi}{3}$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> $\frac{\pi}{6}$</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        យើងដឹងថា $f(x) = \sqrt{\sin^2(3x)} = |\sin(3x)|$។ អនុគមន៍ $\sin(3x)$ មានខួប $\frac{2\pi}{3}$ ប៉ុន្តែដោយសារមានតម្លៃដាច់ខាត ខួបរបស់វាត្រូវថយចុះពាក់កណ្តាល គឺ $p = \frac{\pi}{3}$។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="117">
+    <div class="question-text">
+        <span class="q-number"></span> បើគ្រប់ $x \in \mathbb{R}$, $f(x+p) = f(x)$ នោះអនុគមន៍ $g(x) = f(ax+b)$ មានខួបស្មើនឹង៖
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $ap$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $\frac{p}{|a|}$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $\frac{p}{a} + b$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> $p$</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        យើងចង់បាន $g(x+p') = g(x) \Rightarrow f(a(x+p')+b) = f(ax+b) \Rightarrow f(ax+b + ap') = f(ax+b)$។ នាំឱ្យ $ap' = p \Rightarrow p' = \frac{p}{a}$ ឬជាទូទៅគឺ $\frac{p}{|a|}$។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="118">
+    <div class="question-text">
+        <span class="q-number"></span> រកខួបតូចបំផុត $p$ នៃអនុគមន៍ $f(x) = \sin(x) + \cos\left(\frac{x}{2}\right) + \sin\left(\frac{x}{3}\right)$។
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $6\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $12\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $2\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> $24\pi$</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        - ខួបនៃ $\sin(x)$ គឺ $2\pi$<br>
+        - ខួបនៃ $\cos(x/2)$ គឺ $4\pi$<br>
+        - ខួបនៃ $\sin(x/3)$ គឺ $6\pi$<br>
+        - ខួបសរុបគឺ $BCNN(2\pi, 4\pi, 6\pi) = 12\pi$។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="119">
+    <div class="question-text">
+        <span class="q-number"></span> បើគ្រប់ $x \in \mathbb{R}$ គេមាន $f(x+1) = 1 - f(x)$។ គណនាតម្លៃនៃ $f(100)$ បើដឹងថា $f(0) = 2$។
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $-1$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $1$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $2$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> $0$</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        យើងរកខួប៖ $f(x+2) = 1 - f(x+1) = 1 - (1 - f(x)) = f(x)$ នាំឱ្យ $f$ មានខួប $p = 2$។<br>
+        ដោយសារ $100 = 50 \times 2$ នាំឱ្យ $f(100) = f(0) = 2$។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="120">
+    <div class="question-text">
+        <span class="q-number"></span> រកខួបតូចបំផុត $p$ នៃអនុគមន៍ $f(x) = \cos(\sqrt{2}x)$។
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $2\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $\sqrt{2}\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $\frac{\pi}{\sqrt{2}}$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> គ្មានខួបទេព្រោះ $\sqrt{2}$ ជាចំនួនអសនិទាន</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        ទោះបីជាមេគុណ $a = \sqrt{2}$ ជាចំនួនអសនិទានក៏ដោយ ក៏វាជាអនុគមន៍ទោល ដូចនេះវានៅតែមានខួបតាមរូបមន្ត៖ $p = \frac{2\pi}{|a|} = \frac{2\pi}{\sqrt{2}} = \sqrt{2}\pi$។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="121">
+    <div class="question-text">
+        <span class="q-number"></span> រកខួបតូចបំផុត $p$ នៃអនុគមន៍ $f(x) = 3\sin(2x) + 4\cos(2x)$។
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $2\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $\frac{\pi}{2}$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> $5\pi$</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        យើងអាចបំប្លែងអនុគមន៍នេះទៅជាទម្រង់តែមួយ៖ $f(x) = 5\sin(2x + \alpha)$ ដែល $\tan\alpha = \frac{4}{3}$។ ដូចនេះខួបរបស់វាគឺ $p = \frac{2\pi}{2} = \frac{\pi}{2}$ មិនប្រែប្រួលដោយសារតែមេគុណបន្សំឡើយ។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="122">
+    <div class="question-text">
+        <span class="q-number"></span> បើគ្រប់ $x \in \mathbb{R}$ គេមាន $f(x+3) + f(x-3) = \sqrt{2}f(x)$។ រកខួប $p$ នៃអនុគមន៍ $f$។
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $6$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $12$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $24$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> $48$</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        តាង $t = x-3 \Rightarrow f(t+6) + f(t) = \sqrt{2}f(t+3) \Rightarrow f(t+6) = \sqrt{2}f(t+3) - f(t)$។<br>
+        តាមរយៈការជំនួសជាបន្តបន្ទាប់ យើងនឹងទាញបានសមីការ $f(t+12) = -f(t) \Rightarrow f(t+24) = f(t)$។ ដូចនេះខួបគឺ $p = 24$។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="123">
+    <div class="question-text">
+        <span class="q-number"></span> រកខួបតូចបំផុត $p$ នៃអនុគមន៍ $f(x) = \frac{1}{2-\cos(5x)}$។
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $2\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $\frac{2\pi}{5}$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $\frac{\pi}{5}$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> $10\pi$</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        អនុគមន៍ប្រភាគនេះមានខួបអាស្រ័យតែទៅលើតួប្រែប្រួលត្រីកោណមាត្រ $\cos(5x)$ តែប៉ុណ្ណោះ។ ដូចនេះខួបរបស់វាគឺ $p = \frac{2\pi}{5}$។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="124">
+    <div class="question-text">
+        <span class="q-number"></span> រកខួបតូចបំផុត $p$ នៃអនុគមន៍ $f(x) = \sin^3 x$។
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $2\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="W1"> $\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $\frac{2\pi}{3}$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> $\frac{\pi}{3}$</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        តាមរូបមន្តព្រះលីនេអ៊ែរ៖ $\sin^3 x = \frac{3\sin x - \sin(3x)}{4}$។<br>
+        - ខួបនៃ $\sin x$ គឺ $2\pi$ និងខួបនៃ $\sin(3x)$ គឺ $\frac{2\pi}{3}$។<br>
+        - ខួបសរុបគឺ $BCNN\left(2\pi, \frac{2\pi}{3}\right) = 2\pi$ (ព្រោះសីនុសស្វ័យគុណសេសរក្សាខួប $2\pi$ ដដែល)។
+    </div>
+</div>
+
+<div class="question-card" data-qindex="125">
+    <div class="question-text">
+        <span class="q-number"></span> រកខួបតូចបំផុត $p$ នៃអនុគមន៍ $f(x) = \ln(\tan x)$ លើដែនកំណត់របស់វាចំពោះ $x \in \left(0, \frac{\pi}{2}\right)$។
+        <span class="points">(៥ ពិន្ទុ)</span>
+    </div>
+    <div class="options-container">
+        <label class="option-label"><input type="radio" name="q" value="W1"> $2\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $\pi$</label>
+        <label class="option-label"><input type="radio" name="q" value="W2"> $\frac{\pi}{2}$</label>
+        <label class="option-label"><input type="radio" name="q" value="W3"> គ្មានខួបទេ</label>
+    </div>
+    <div class="solution-box">
+        <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
+        យើងពិនិត្យ $f(x+\pi) = \ln(\tan(x+\pi)) = \ln(\tan x) = f(x)$។ ដូចនេះទោះបីជាវាស្ថិតក្នុងអនុគមន៍លោការីត ក៏វានៅតែរក្សាខួបរបស់តង់សង់ដដែល គឺ $p = \pi$។
+    </div>
+</div>
+
+                </div>
+
+            <div class="navigation-box" id="navBox">
+                <button type="button" class="nav-btn" id="prevBtn" onclick="changeQuestion(-1)" disabled>⏮ ថយក្រោយ</button>
+                <button type="button" class="nav-btn next-btn" id="nextBtn" onclick="changeQuestion(1)">បន្ទាប់ ⏭</button>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">ផ្ញើចម្លើយ</button>
+        </form>
+    </div>
+
+    <script>
+        let currentQuestionIndex = 0; 
+        let shuffledCards = [];
+        let totalExamPoints = 0;
+        
+        // 🌟 ចាប់ផ្តើមកត់ត្រាម៉ោងភ្លាមៗនៅពេលសិស្សបើកទំព័រវិញ្ញាសា
+        let startTime = new Date(); 
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function initQuiz() {
+            const container = document.getElementById('questionsContainer');
+            const cards = Array.from(container.getElementsByClassName('question-card'));
+            
+            totalExamPoints = cards.length * 5;
+            document.getElementById('totalPointsDisplay').innerText = totalExamPoints;
+
+            cards.forEach(card => {
+                const optionsContainer = card.querySelector('.options-container');
+                if (optionsContainer) {
+                    const options = Array.from(optionsContainer.getElementsByClassName('option-label'));
+                    shuffleArray(options);
+                    options.forEach(opt => optionsContainer.appendChild(opt));
+                }
+            });
+
+            shuffleArray(cards);
+            container.innerHTML = '';
+            cards.forEach(card => container.appendChild(card));
+
+            shuffledCards = cards;
+            shuffledCards[0].classList.add('active');
+            
+            updateNavigation();
+        }
+
+        function updateNavigation() {
+            const total = shuffledCards.length;
+            document.getElementById('progressDisplay').innerText = `លំហាត់ទី ${currentQuestionIndex + 1}/${total}`;
+
+            if (currentQuestionIndex === 0) {
+                document.getElementById('prevBtn').disabled = true;
+            } else {
+                document.getElementById('prevBtn').disabled = false;
+            }
+
+            if (currentQuestionIndex === total - 1) {
+                document.getElementById('nextBtn').style.display = 'none';
+                document.getElementById('submitBtn').style.display = 'block';
+            } else {
+                document.getElementById('nextBtn').style.display = 'block';
+                document.getElementById('submitBtn').style.display = 'none';
+            }
+        }
+
+        function changeQuestion(direction) {
+            shuffledCards[currentQuestionIndex].classList.remove('active');
+            currentQuestionIndex += direction;
+            shuffledCards[currentQuestionIndex].classList.add('active');
+            updateNavigation();
+        }
+
+        function calculateGradeFromPercentage(percentage) {
+            let grade = 'F'; let comment = ''; let cssClass = 'grade-F';
+            if (percentage >= 90) { grade = 'A'; comment = '🎉 ល្អប្រសើរណាស់! លោកគ្រូសរសើរ។ អ្នកពិតជាមានសមត្ថភាពខ្ពស់ និងយល់ច្បាស់ពីមេរៀន។ សូមបន្តការខិតខំនេះ!'; cssClass = 'grade-A'; }
+            else if (percentage >= 80) { grade = 'B'; comment = '✨ ល្អណាស់! លទ្ធផលគួរឱ្យមោទនៈ។ បន្ថែមការប្រុងប្រយ័ត្នបន្តិចទៀត អ្នកនឹងបាននិទ្ទេស A ជាក់ជាមិនខាន។'; cssClass = 'grade-B'; }
+            else if (percentage >= 70) { grade = 'C'; comment = '👍 ល្អបង្គួរ! លទ្ធផលល្អ។ ព្យាយាមរំលឹកមេរៀនបន្ថែមលើចំណុចដែលខ្វះខាតដើម្បីពង្រឹងសមត្ថភាព។'; cssClass = 'grade-C'; }
+            else if (percentage >= 60) { grade = 'D'; comment = '👌 កម្រិតមធ្យម! អ្នកបានឆ្លងផុតការវាយតម្លៃ ប៉ុន្តែត្រូវបង្កើនការធ្វើលំហាត់បន្ថែមទៀត។'; cssClass = 'grade-D'; }
+            else if (percentage >= 50) { grade = 'E'; comment = '⚠️ កម្រិតខ្សោយ! ជិតជាប់ហើយ។ សូមខិតខំប្រឹងប្រែងបន្ថែម និងសួរលោកគ្រូត្រង់ចំណុចមិនច្បាស់។'; cssClass = 'grade-E'; }
+            else { grade = 'F'; comment = '❌ មិនទាន់ជាប់ទេ! កុំបាក់ទឹកចិត្តអី។ ពិនិត្យមើលដំណោះស្រាយលម្អិត ហើយព្យាយាមធ្វើឡើងវិញម្តងទៀតណា!'; cssClass = 'grade-F'; }
+            return { grade, comment, cssClass };
+        }
+
+        function submitExam(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('studentName').value.trim();
+            const sClass = document.getElementById('studentClass').value.trim();
+            
+            if (!name || !sClass) {
+                alert('សូមបំពេញឈ្មោះ និងថ្នាក់សិក្សាជាមុនសិន!');
+                shuffledCards[currentQuestionIndex].classList.remove('active');
+                currentQuestionIndex = 0;
+                shuffledCards[currentQuestionIndex].classList.add('active');
+                updateNavigation();
+                return;
+            }
+
+            // 🌟 គណនារយៈពេលដែលសិស្សបានប្រើប្រាស់
+            let endTime = new Date();
+            let timeDiff = endTime - startTime; // គិតជាមីលីវិនាទី
+            timeDiff /= 1000; // ប្តូរទៅជាវិនាទី
+            
+            let seconds = Math.floor(timeDiff % 60);
+            let minutes = Math.floor(timeDiff / 60);
+            
+            let timeString = "";
+            if (minutes > 0) {
+                timeString += `${minutes} នាទី `;
+            }
+            timeString += `${seconds} វិនាទី`;
+            
+            // បង្ហាញរយៈពេលទៅលើ Result Box
+            document.getElementById('timeSpentDisplay').innerText = timeString;
+
+            let score = 0;
+            shuffledCards.forEach((card) => {
+                const radioInput = card.querySelector('input[type="radio"]');
+                if (radioInput) {
+                    const qName = radioInput.name;
+                    const checkedOption = card.querySelector(`input[name="${qName}"]:checked`);
+                    const solutionBox = card.querySelector('.solution-box');
+                    
+                    card.classList.add('active');
+                    if (solutionBox) solutionBox.style.display = 'block';
+
+                    if (checkedOption && checkedOption.getAttribute('data-correct') === 'true') {
+                        score += 5;
+                        card.classList.add('correct-flash');
+                    } else {
+                        card.classList.add('incorrect-flash');
+                    }
+                }
+            });
+
+            document.getElementById('navBox').style.display = 'none';
+            document.getElementById('submitBtn').style.display = 'none';
+            document.getElementById('infoBox').style.display = 'none';
+
+            const finalPercentage = Math.round((score / totalExamPoints) * 100);
+            const evaluation = calculateGradeFromPercentage(finalPercentage);
+
+            document.getElementById('studentResultName').innerText = `បេក្ខជន៖ ${name} | ថ្នាក់/បន្ទប់៖ ${sClass}`;
+            document.getElementById('scoreDisplay').innerText = score;
+            document.getElementById('maxPointsDisplay').innerText = totalExamPoints;
+            document.getElementById('percentDisplay').innerText = finalPercentage;
+            
+            const gradeBadge = document.getElementById('gradeDisplay');
+            gradeBadge.innerText = `និទ្ទេស៖ ${evaluation.grade}`;
+            gradeBadge.className = `grade-badge ${evaluation.cssClass}`;
+            
+            document.getElementById('gradeComment').innerText = evaluation.comment;
+            document.getElementById('resultBox').style.display = 'block';
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        window.onload = initQuiz;
+    </script>
+
+<script>
+    // ១. ទាញយកឈ្មោះ File ឱ្យបានច្បាស់លាស់ ទោះបើកពី Local ព្រលែងក៏ដោយ
+    let fullPath = window.location.pathname;
+    let fileName = fullPath.substring(fullPath.lastIndexOf('/') + 1);
+    
+    // បន្ថែមការការពារ៖ បើបើកលើ Windows ពេលខ្លះវាប្រើសញ្ញា \ ជំនួសឱ្យ /
+    if (fileName.includes('\\')) {
+        fileName = fileName.substring(fileName.lastIndexOf('\\') + 1);
+    }
+
+    // ២. កាត់យកតែលេខចេញពីឈ្មោះ File (ដក ".html" ចេញ)
+    let lessonNumber = fileName.replace(".html", "");
+
+    // ៣. ដាក់លក្ខខណ្ឌបង្ហាញ៖ បើទាញបានលេខ ឱ្យបង្ហាញលេខ បើទទេឱ្យបង្ហាញសញ្ញាសួរ ?
+    if (lessonNumber !== "" && !isNaN(lessonNumber)) {
+        document.getElementById("lesson-id").innerText = lessonNumber;
+    } else {
+        document.getElementById("lesson-id").innerText = "1"; // លំនាំដើម
+    }
+</script>
+</body>
+</html>
