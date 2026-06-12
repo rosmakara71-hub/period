@@ -1,152 +1,118 @@
-
 <!DOCTYPE html>
 <html lang="km">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>មេរៀនលំអិត៖ របៀបរកខួបនៃអនុគមន៍</title>
+    <title>មេរៀនគ្រប់ជ្រុងជ្រោយ៖ ខួបនៃអនុគមន៍</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    
     <style>
         body {
             font-family: 'Khmer OS Battambang', 'Segoe UI', sans-serif;
             line-height: 1.8;
-            background-color: #f0f2f5;
-            color: #333;
-            margin: 0;
+            background-color: #f4f6f9;
+            color: #2c3e50;
             padding: 20px;
         }
-        .main-container {
-            max-width: 900px;
-            margin: 20px auto;
+        .wrapper {
+            max-width: 950px;
+            margin: auto;
             background: #fff;
-            padding: 30px;
+            padding: 40px;
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
         }
-        h1 {
-            text-align: center;
-            color: #0d6efd;
-            margin-bottom: 30px;
+        h1 { color: #0056b3; text-align: center; margin-bottom: 30px; border-bottom: 3px solid #0056b3; padding-bottom: 15px;}
+        h2 { color: #e67e22; border-bottom: 1px solid #ddd; padding-bottom: 5px; margin-top: 35px; }
+        .grid-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
         }
-        /* រចនាប័ទ្ម Accordion កម្រិត */
-        .level-section {
-            margin-bottom: 15px;
+        .grid-table th, .grid-table td {
             border: 1px solid #dee2e6;
-            border-radius: 8px;
-            overflow: hidden;
+            padding: 12px;
+            text-align: left;
         }
-        .level-header {
-            background-color: #f8f9fa;
-            padding: 15px 20px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            border-bottom: 1px solid #dee2e6;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .level-1 .level-header { border-left: 5px solid #198754; color: #198754; }
-        .level-2 .level-header { border-left: 5px solid #ffc107; color: #9a7300; }
-        .level-3 .level-header { border-left: 5px solid #dc3545; color: #dc3545; }
-        
-        .level-content {
-            padding: 20px;
-            background: #fff;
-        }
-        .formula-box {
-            background: #f1f3f4;
+        .grid-table th { background-color: #0056b3; color: white; }
+        .grid-table tr:nth-child(even) { background-color: #f8f9fa; }
+        .note-box {
+            background-color: #f8d7da;
+            color: #721c24;
             padding: 15px;
-            border-radius: 6px;
-            margin: 10px 0;
-            text-align: center;
-        }
-        .example-box {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 15px;
-            margin: 15px 0;
+            border-left: 5px solid #dc3545;
             border-radius: 4px;
+            margin: 15px 0;
         }
-        span.badge {
-            background: #e9ecef;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: #6c757d;
+        .special-box {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            padding: 15px;
+            border-left: 5px solid #17a2b8;
+            border-radius: 4px;
+            margin: 15px 0;
         }
     </style>
 </head>
 <body>
 
-<div class="main-container">
-    <h1>ការស្វែងរកខួបនៃអនុគមន៍ (បែងចែកតាមកម្រិត)</h1>
+<div class="wrapper">
+    <h1>តារាងវិភាគ និងរូបមន្តខួបនៃអនុគមន៍គ្រប់ករណី (Complete Guide)</h1>
+    
+    <p>ខាងក្រោមនេះជាតារាងសង្ខេបលំអិតគ្រប់ករណីទាំងអស់នៃខួបអនុគមន៍ទោល ដែលជួបប្រទះក្នុងគណិតវិទ្យាថ្នាក់វិទ្យាល័យ និងឧត្តមសិក្សា៖</p>
 
-    <div class="level-section level-1">
-        <div class="level-header">
-            <span>កម្រិតទី ១ ៖ មូលដ្ឋានគ្រឹះ (Basic)</span>
-            <span class="badge">ថ្នាក់ទី ១១-១២</span>
-        </div>
-        <div class="level-content">
-            <p><strong>និយមន័យ៖</strong> រកចំនួនពិតវិជ្ជមាន \(T\) តូចបំផុតដែលផ្ទៀងផ្ទាត់ \(f(x+T) = f(x)\)។</p>
-            <p>រូបមន្តសម្រាប់អនុគមន៍ទោលគ្រឹះ \( (b \neq 0) \):</p>
-            <div class="formula-box">
-                អនុគមន៍ \(\sin(bx)\) និង \(\cos(bx)\) \(\implies T = \frac{2\pi}{|b|}\)<br><br>
-                អនុគមន៍ \(\tan(bx)\) និង \(\cot(bx)\) \(\implies T = \frac{\pi}{|b|}\)
-            </div>
-            <div class="example-box">
-                <strong>ឧទាហរណ៍៖</strong> រកខួបនៃ \(f(x) = \cos(4x)\)<br>
-                <strong>ដំណោះស្រាយ៖</strong> តាមរូបមន្តយើងមាន \(b = 4\) ដូចនេះ ខួបគឺ \(T = \frac{2\pi}{4} = \frac{\pi}{2}\)។
-            </div>
-        </div>
+    <table class="grid-table">
+        <thead>
+            <tr>
+                <th>ប្រភេទទម្រង់អនុគមន៍</th>
+                <th>ករណីស្វ័យគុណសេស (\(n\) សេស) ឬគ្មានស្វ័យគុណ</th>
+                <th>ករណីស្វ័យគុណគូ (\(n\) គូ) ឬមានតម្លៃដាច់ខាត</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>\(\sin^n(bx+c)\) / \(\cos^n(bx+c)\)</strong></td>
+                <td>\(T = \frac{2\pi}{|b|}\)</td>
+                <td>\(T = \frac{\pi}{|b|}\)</td>
+            </tr>
+            <tr>
+                <td><strong>\(\tan^n(bx+c)\) / \(\cot^n(bx+c)\)</strong></td>
+                <td>\(T = \frac{\pi}{|b|}\)</td>
+                <td>\(T = \frac{\pi}{|b|}\)</td>
+            </tr>
+            <tr>
+                <td><strong>\(\sec^n(bx+c)\) / \(\csc^n(bx+c)\)</strong></td>
+                <td>\(T = \frac{2\pi}{|b|}\)</td>
+                <td>\(T = \frac{\pi}{|b|}\)</td>
+            </tr>
+            <tr>
+                <td><strong>អនុគមន៍ផ្នែកគត់ \(\{bx\}\)</strong></td>
+                <td colspan="2" style="text-align: center;">\(T = \frac{1}{|b|}\)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>ករណីផលបូកដកច្រើនអនុគមន៍ និងលក្ខខណ្ឌពិសេស</h2>
+    
+    <h3>១. វិធីសាស្ត្ររក LCM នៃប្រភាគ</h3>
+    <p>នៅពេលរកខួបឃើញជាប្រភាគ ឧទាហរណ៍ \(T_1 = \frac{a}{b}\) និង \(T_2 = \frac{c}{d}\) នោះខួបរួមគឺ៖</p>
+    <div style="text-align: center; background: #eee; padding: 10px; border-radius: 5px;">
+        \[T = \frac{\text{LCM}(a, c)}{\text{GCD}(b, d)}\]
     </div>
 
-    <div class="level-section level-2">
-        <div class="level-header">
-            <span>កម្រិតទី ២ ៖ កម្រិតមធ្យម (Intermediate)</span>
-            <span class="badge">ត្រៀមប្រឡងបាក់ឌុប</span>
-        </div>
-        <div class="level-content">
-            <h3>១. ករណីមានស្វ័យគុណគូ ឬតម្លៃដាច់ខាត</h3>
-            <p>នៅពេលអនុគមន៍ស៊ីនុស ឬកូស៊ីនុសមានស្វ័យគុណជាចំនួនគូ ឬនៅក្នុងតម្លៃដាច់ខាត ខួបរបស់វានឹងថយមកនៅត្រឹម \(\frac{\pi}{|b|}\)៖</p>
-            <div class="formula-box">
-                \(f(x) = \sin^2(bx)\) ឬ \(f(x) = |\cos(bx)| \implies T = \frac{\pi}{|b|}\)
-            </div>
-
-            <h3>២. ករណីផលបូក/ផលដកអនុគមន៍ \(f(x) \pm g(x)\)</h3>
-            <p>ខួបរួមគឺជានិរន្តរគូករួមតូចបំផុត (LCM) នៃខួបទាំងពីរ៖ \(T = \text{LCM}(T_1, T_2)\)</p>
-            <div class="example-box">
-                <strong>ឧទាហរណ៍៖</strong> រកខួបនៃ \(F(x) = \sin(2x) + \cos(3x)\)<br>
-                - ខួបនៃ \(\sin(2x)\) គឺ \(T_1 = \frac{2\pi}{2} = \pi\)<br>
-                - ខួបនៃ \(\cos(3x)\) គឺ \(T_2 = \frac{2\pi}{3}\)<br>
-                - នាំឲ្យខួបរួម \(T = \text{LCM}(\pi, \frac{2\pi}{3}) = 2\pi\)។
-            </div>
-        </div>
+    <div class="note-box">
+        <strong>⚠️ ករណីប្រយ័ត្ន (អត្ថិភាពនៃខួប)៖</strong> 
+        បើផលធៀប \(\frac{T_1}{T_2}\) មិនមែនជាចំនួនសនិទានទេ នោះអនុគមន៍លទ្ធផលគឺ <strong>"គ្មានខួបឡើយ"</strong>។<br>
+        <em>ឧទាហរណ៍៖</em> \(f(x) = \sin(3x) + \cos(\pi x)\) គឺគ្មានខួបទេ ព្រោះ \(\frac{2\pi/3}{2} = \frac{\pi}{3} \notin \mathbb{Q}\)។
     </div>
 
-    <div class="level-section level-3">
-        <div class="level-header">
-            <span>កម្រិតទី ៣ ៖ កម្រិតខ្ពស់ (Advanced)</span>
-            <span class="badge">ប្រឡងសិស្សពូកែ / និស្សិតសាកលវិទ្យាល័យ</span>
-        </div>
-        <div class="level-content">
-            <h3>១. លក្ខខណ្ឌអត្ថិភាពនៃខួប (Existence of Period)</h3>
-            <p>ផលបូកនៃអនុគមន៍ខួបពីរ មានខួបរួមលុះត្រាតែផលធៀប \(\frac{T_1}{T_2}\) ជា <strong>ចំនួនសនិទាន</strong> (\(\mathbb{Q}\))។</p>
-            <p style="color: #dc3545;">*សំគាល់៖ \(\sin(x) + \sin(\pi x)\) គ្មានខួបទេ ព្រោះ \(\frac{2\pi}{2} = \pi \notin \mathbb{Q}\)។</p>
-
-            <h3>២. ករណីពិសេសបំពេញគ្នា (Symmetric functions)</h3>
-            <p>ចំពោះអនុគមន៍ខ្លះ ថ្វីត្បិតតែតាមរូបមន្តរកឃើញ LCM ធំ ប៉ុន្តែដោយសារលក្ខណៈឆ្លុះ វានាំឲ្យមានខួបតូចជាង LCM នោះទៅទៀត។</p>
-            <div class="example-box">
-                <strong>ឧទាហរណ៍ពិសេស៖</strong> \(f(x) = |\sin x| + |\cos x|\)<br>
-                តាមរូបមន្តកម្រិត២៖ \(T_1 = \pi, T_2 = \pi \implies \text{LCM} = \pi\)។<br>
-                ប៉ុន្តែបើផ្ទៀងផ្ទាត់តាមនិយមន័យជាមួយ \(T = \frac{\pi}{2}\)៖<br>
-                \(f(x + \frac{\pi}{2}) = |\sin(x + \frac{\pi}{2})| + |\cos(x + \frac{\pi}{2})| = |\cos x| + |- \sin x| = f(x)\)។<br>
-                ដូចនេះ ខួបពិតប្រាកដតូចបំផុតគឺ <strong>\(T = \frac{\pi}{2}\)</strong>។
-            </div>
-        </div>
+    <div class="special-box">
+        <strong>💡 ករណីពិសេសបំពេញគ្នា (Symmetric Trick)៖</strong><br>
+        ចំពោះអនុគមន៍ \(f(x) = |\sin x| + |\cos x|\) បើគិតតាមរូបមន្តធម្មតាគឺ \(T = \pi\)។ ប៉ុន្តែដោយសារលក្ខណៈឆ្លុះពិសេស វារក្សាទម្រង់ដដែលនៅពេលរំកិលត្រឹម \(\frac{\pi}{2}\)។ ដូចនេះខួបពិតប្រាកដរបស់វាគឺ <strong>\(T = \frac{\pi}{2}\)</strong>។
     </div>
+
+    <h2>សន្និដ្ឋានចំពោះអនុគមន៍គ្មានខួប</h2>
+    <p>រាល់អនុគមន៍ពហុធាទាំងអស់ (\(x^2, x^3...\)), អនុគមន៍លោការីត (\(\ln x\)), និងអនុគមន៍អិចស្ប៉ូណង់ស្យែល (\(e^x\)) គឺ<strong>មិនមែនជាអនុគមន៍ខួបឡើយ</strong> ព្រោះក្រាហ្វរបស់វាមិនមានលក្ខណៈដដែលៗជារង្វង់នោះទេ។</p>
 </div>
 
 </body>
