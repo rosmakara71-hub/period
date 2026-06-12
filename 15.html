@@ -115,5 +115,34 @@
     <p>រាល់អនុគមន៍ពហុធាទាំងអស់ (\(x^2, x^3...\)), អនុគមន៍លោការីត (\(\ln x\)), និងអនុគមន៍អិចស្ប៉ូណង់ស្យែល (\(e^x\)) គឺ<strong>មិនមែនជាអនុគមន៍ខួបឡើយ</strong> ព្រោះក្រាហ្វរបស់វាមិនមានលក្ខណៈដដែលៗជារង្វង់នោះទេ។</p>
 </div>
 
+    div class="container">
+    <h1>អនុគមន៍ផ្នែកគត់ (Floor Function)</h1>
+    <p><strong>អនុគមន៍ផ្នែកគត់</strong> នៃចំនួនពិត \(x\) គឺជាចំនួនគត់ធំបំផុត ដែលតូចជាង ឬស្មើ \(x\)។ គេតំណាងដោយនិមិត្តសញ្ញា \(\lfloor x \rfloor\) ឬ \([x]\)។</p>
+    
+    <div class="math-box">
+        ន័យគណិតវិទ្យា៖ បើ \(n \le x < n + 1\) នោះ \(\lfloor x \rfloor = n\) (ដែល \(n\) ជាចំនួនគត់)
+    </div>
+
+    <h2>ឧទាហរណ៍ជាក់ស្តែង</h2>
+    <div>
+        <div class="ex-item">
+            <strong>ករណីចំនួនវិជ្ជមាន៖</strong><br>
+            \(\lfloor 3.7 \rfloor = 3\)<br>
+            \(\lfloor 0.95 \rfloor = 0\)
+        </div>
+        <br>
+        <div class="ex-item" style="background: #fde8e8; border-left-color: #e74c3c;">
+            <strong>ករណីចំនួនអវិជ្ជមាន (ប្រយ័ត្នច្រឡំ)៖</strong><br>
+            \(\lfloor -1.2 \rfloor = -2\) <small>(ព្រោះ \(-2 \le -1.2\))</small><br>
+            \(\lfloor -0.4 \rfloor = -1\)
+        </div>
+    </div>
+
+    <h2>លក្ខណៈសម្បត្តិ</h2>
+    <ul>
+        <li>\(\lfloor x \rfloor \le x < \lfloor x \rfloor + 1\)</li>
+        <li>\(\lfloor x + k \rfloor = \lfloor x \rfloor + k\) (ចំពោះ \(k\) ជាចំនួនគត់)</li>
+    </ul>
+</div>
 </body>
 </html>
