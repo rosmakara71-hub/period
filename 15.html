@@ -1,320 +1,152 @@
+
 <!DOCTYPE html>
 <html lang="km">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>គន្លឹះ និងរូបមន្តស្នូល៖ ការកំណត់ខួបនៃអនុគមន៍ (គ្រប់កម្រិត)</title>
+    <title>មេរៀនលំអិត៖ របៀបរកខួបនៃអនុគមន៍</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Kantumruuy+Pro:wght@400;600;700&family=Moul&display=swap');
-        
         body {
-            font-family: 'Kantumruuy Pro', sans-serif;
-            background-color: #f8fafc;
-            color: #1e293b;
-            line-height: 1.9;
-            padding: 30px 15px;
+            font-family: 'Khmer OS Battambang', 'Segoe UI', sans-serif;
+            line-height: 1.8;
+            background-color: #f0f2f5;
+            color: #333;
             margin: 0;
+            padding: 20px;
         }
-        .container {
+        .main-container {
             max-width: 900px;
-            margin: 0 auto;
-            background-color: #ffffff;
-            padding: 40px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
-        h1.main-title {
-            font-family: 'Moul', serif;
+        h1 {
             text-align: center;
-            color: #1e3a8a;
-            font-size: 24px;
-            margin-bottom: 5px;
-            line-height: 1.6;
+            color: #0d6efd;
+            margin-bottom: 30px;
         }
-        h2.subtitle {
-            text-align: center;
-            color: #64748b;
-            font-size: 16px;
-            font-weight: normal;
-            margin-top: 0;
-            margin-bottom: 40px;
-        }
+        /* រចនាប័ទ្ម Accordion កម្រិត */
         .level-section {
-            margin-bottom: 40px;
-            border: 1px solid #e2e8f0;
+            margin-bottom: 15px;
+            border: 1px solid #dee2e6;
             border-radius: 8px;
             overflow: hidden;
         }
         .level-header {
+            background-color: #f8f9fa;
             padding: 15px 20px;
-            font-weight: 700;
-            font-size: 18px;
-            color: #ffffff;
-        }
-        .level-1 { border-top: 4px solid #10b981; }
-        .level-1 .level-header { background-color: #10b981; }
-        
-        .level-2 { border-top: 4px solid #3b82f6; }
-        .level-2 .level-header { background-color: #3b82f6; }
-        
-        .level-3 { border-top: 4px solid #8b5cf6; }
-        .level-3 .level-header { background-color: #8b5cf6; }
-
-        .level-body {
-            padding: 25px;
-            background-color: #ffffff;
-        }
-        h3.topic-title {
-            color: #1e293b;
-            font-size: 16px;
-            font-weight: 700;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            border-bottom: 2px solid #f1f5f9;
-            padding-bottom: 5px;
-        }
-        h3.topic-title::before {
-            content: "✦ ";
-            color: currentColor;
-        }
-        ul {
-            padding-left: 20px;
-            margin: 10px 0;
-        }
-        li {
-            margin-bottom: 8px;
-        }
-        
-        /* រចនាបថរូបមន្តគណិតវិទ្យា Offline មិនប្រើ MathJax */
-        .math-display {
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border-bottom: 1px solid #dee2e6;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            font-family: 'Times New Roman', Times, serif;
-            font-style: italic;
-            font-size: 20px;
+        }
+        .level-1 .level-header { border-left: 5px solid #198754; color: #198754; }
+        .level-2 .level-header { border-left: 5px solid #ffc107; color: #9a7300; }
+        .level-3 .level-header { border-left: 5px solid #dc3545; color: #dc3545; }
+        
+        .level-content {
+            padding: 20px;
+            background: #fff;
+        }
+        .formula-box {
+            background: #f1f3f4;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+            text-align: center;
+        }
+        .example-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
             padding: 15px;
             margin: 15px 0;
-            background-color: #f8fafc;
-            border-radius: 6px;
-            flex-wrap: wrap;
+            border-radius: 4px;
         }
-        .level-1 .math-display { border-left: 5px solid #10b981; background-color: #f0fdf4; }
-        .level-2 .math-display { border-left: 5px solid #3b82f6; background-color: #eff6ff; }
-        .level-3 .math-display { border-left: 5px solid #8b5cf6; background-color: #f5f3ff; }
-
-        .math-inline {
-            font-family: 'Times New Roman', Times, serif;
-            font-style: italic;
-            font-size: 18px;
-            font-weight: bold;
-            color: #0f172a;
-            padding: 0 4px;
-        }
-        
-        /* បង្កើតទម្រង់ប្រភាគគណិតវិទ្យា */
-        .fraction {
-            display: inline-flex;
-            flex-direction: column;
-            text-align: center;
-            vertical-align: middle;
-            padding: 0 6px;
-            font-size: 19px;
-        }
-        .numerator {
-            border-bottom: 2px solid #1e293b;
-            padding-bottom: 2px;
-        }
-        .denominator {
-            padding-top: 2px;
-        }
-        
-        /* សញ្ញាតម្លៃដាច់ខាត */
-        .abs {
-            display: inline-flex;
-            align-items: center;
-            padding: 0 3px;
-            border-left: 2px solid #1e293b;
-            border-right: 2px solid #1e293b;
-            margin: 0 2px;
-            font-style: normal;
-        }
-        .abs-content {
-            font-style: italic;
-            padding: 0 2px;
-        }
-
-        /* និមិត្តសញ្ញាអាំងតេក្រាល */
-        .integral-sign {
-            font-size: 28px;
-            font-style: normal;
-            margin-right: 2px;
-            position: relative;
-        }
-        .int-limit {
-            display: inline-flex;
-            flex-direction: column;
-            font-size: 12px;
-            vertical-align: middle;
-            margin-left: -5px;
-            margin-right: 5px;
-            font-family: 'Times New Roman', sans-serif;
-        }
-
-        .note-box {
-            background-color: #fffbeb;
-            border: 1px dashed #f59e0b;
-            padding: 15px;
-            border-radius: 6px;
-            font-size: 14px;
-            margin-top: 15px;
-        }
-        .note-box strong {
-            color: #b45309;
+        span.badge {
+            background: #e9ecef;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #6c757d;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1 class="main-title">មេរៀនសង្ខេប៖ គន្លឹះ និងរូបមន្តស្នូលសម្រាប់កំណត់ខួបនៃអនុគមន៍</h1>
-    <h2 class="subtitle">ឯកសារជំនួយស្មារតីសម្រាំងពិសេសសម្រាប់ លោកគ្រូ រស់ មករា (កម្រិតទី ១១-១២)</h2>
+<div class="main-container">
+    <h1>ការស្វែងរកខួបនៃអនុគមន៍ (បែងចែកតាមកម្រិត)</h1>
 
     <div class="level-section level-1">
-        <div class="level-header">Level 1: គ្រឹះស្ថានីយ និងអនុគមន៍ត្រីកោណមាត្រទោល</div>
-        <div class="level-body">
-            <p>ផ្តោតលើនិយមន័យជាមូលដ្ឋាន និងការរកខួបនៃអនុគមន៍ត្រីកោណមាត្រដែលមានទម្រង់ងាយៗ។</p>
-            
-            <h3 class="topic-title">និយមន័យគ្រឹះ (យោងតាមសៀវភៅពុម្ពក្រសួង)</h3>
-            <p><span class="math-inline">f</span> ជាអនុគមន៍មានដែនកំណត់ <span class="math-inline">D</span>។ <span class="math-inline">f</span> ជាអនុគមន៍មានខួប <span class="math-inline">p</span> លុះត្រាតែ <span class="math-inline">p</span> ជាចំនួនពិតវិជ្ជមានតូចបំផុត ដែលគ្រប់ <span class="math-inline">x &isin; D</span> គេបាន៖</p>
-            
-            <div class="math-display">
-                f(x + p) = f(x)
+        <div class="level-header">
+            <span>កម្រិតទី ១ ៖ មូលដ្ឋានគ្រឹះ (Basic)</span>
+            <span class="badge">ថ្នាក់ទី ១១-១២</span>
+        </div>
+        <div class="level-content">
+            <p><strong>និយមន័យ៖</strong> រកចំនួនពិតវិជ្ជមាន \(T\) តូចបំផុតដែលផ្ទៀងផ្ទាត់ \(f(x+T) = f(x)\)។</p>
+            <p>រូបមន្តសម្រាប់អនុគមន៍ទោលគ្រឹះ \( (b \neq 0) \):</p>
+            <div class="formula-box">
+                អនុគមន៍ \(\sin(bx)\) និង \(\cos(bx)\) \(\implies T = \frac{2\pi}{|b|}\)<br><br>
+                អនុគមន៍ \(\tan(bx)\) និង \(\cot(bx)\) \(\implies T = \frac{\pi}{|b|}\)
             </div>
-            
-            <p>ពីនិយមន័យនេះ គេអាចសរសេរទាញបាន៖</p>
-            <div class="math-display">
-                f(x) = f(x + p) = f[(x + p) + p] = f(x + 2p) = ......<br>
-                f(x) = f(x - p) = f[(x - p) - p] = f(x - 2p) = ......
-            </div>
-            
-            <p><strong>ជាទូទៅ៖</strong> គ្រប់ <span class="math-inline">k &isin; Z</span> , គ្រប់ <span class="math-inline">x &isin; D</span> គេបាន៖</p>
-            <div class="math-display">
-                f(x + kp) = f(x)
-            </div>
-
-            <h3 class="topic-title">រូបមន្តស្នូលសម្រាប់ទម្រង់ទោល <span class="math-inline">f(&omega;x + &phi;)</span></h3>
-            <ul>
-                <li>ចំពោះអនុគមន៍ <span class="math-inline">f(x) = sin(&omega;x)</span> ឬ <span class="math-inline">f(x) = cos(&omega;x)</span> ខួបតូចបំផុតគឺ៖</li>
-            </ul>
-            <div class="math-display">
-                p = 
-                <div class="fraction">
-                    <span class="numerator">2&pi;</span>
-                    <span class="denominator"><div class="abs"><span class="abs-content">&omega;</span></div></span>
-                </div>
-            </div>
-            <ul>
-                <li>ចំពោះអនុគមន៍ <span class="math-inline">f(x) = tan(&omega;x)</span> ឬ <span class="math-inline">f(x) = cot(&omega;x)</span> ខួបតូចបំផុតគឺ៖</li>
-            </ul>
-            <div class="math-display">
-                p = 
-                <div class="fraction">
-                    <span class="numerator">&pi;</span>
-                    <span class="denominator"><div class="abs"><span class="abs-content">&omega;</span></div></span>
-                </div>
+            <div class="example-box">
+                <strong>ឧទាហរណ៍៖</strong> រកខួបនៃ \(f(x) = \cos(4x)\)<br>
+                <strong>ដំណោះស្រាយ៖</strong> តាមរូបមន្តយើងមាន \(b = 4\) ដូចនេះ ខួបគឺ \(T = \frac{2\pi}{4} = \frac{\pi}{2}\)។
             </div>
         </div>
     </div>
 
     <div class="level-section level-2">
-        <div class="level-header">Level 2: អនុគមន៍មានស្វ័យគុណ សញ្ញាដាច់ខាត និងអនុគមន៍សមាស</div>
-        <div class="level-body">
-            <p>បំប្លែង ឬកំណត់ខួបនៅពេលអនុគមន៍មានផ្ទុកស្វ័យគុណ ឬសញ្ញាតម្លៃដាច់ខាត ដែលធ្វើឱ្យទម្រង់រលកប្រែប្រួល។</p>
-            
-            <h3 class="topic-title">ករណីស្វ័យគុណនៃ <span class="math-inline">sin<sup>n</sup>(&omega;x)</span> និង <span class="math-inline">cos<sup>n</sup>(&omega;x)</span></h3>
-            <ul>
-                <li>បើ <span class="math-inline">n</span> ជា <strong>ចំនួនគត់សេស</strong>៖ ខួបនៅរក្សាដដែលគឺ <span class="math-inline">p = 2&pi; / |&omega;|</span></li>
-                <li>បើ <span class="math-inline">n</span> ជា <strong>ចំនួនគត់គូ</strong>៖ រលកផ្នែកអវិជ្ជមាននឹងត្រឡប់ទៅវិជ្ជមាន ធ្វើឱ្យខួបថយចុះពាក់កណ្តាល៖</li>
-            </ul>
-            <div class="math-display">
-                p = 
-                <div class="fraction">
-                    <span class="numerator">&pi;</span>
-                    <span class="denominator"><div class="abs"><span class="abs-content">&omega;</span></div></span>
-                </div>
+        <div class="level-header">
+            <span>កម្រិតទី ២ ៖ កម្រិតមធ្យម (Intermediate)</span>
+            <span class="badge">ត្រៀមប្រឡងបាក់ឌុប</span>
+        </div>
+        <div class="level-content">
+            <h3>១. ករណីមានស្វ័យគុណគូ ឬតម្លៃដាច់ខាត</h3>
+            <p>នៅពេលអនុគមន៍ស៊ីនុស ឬកូស៊ីនុសមានស្វ័យគុណជាចំនួនគូ ឬនៅក្នុងតម្លៃដាច់ខាត ខួបរបស់វានឹងថយមកនៅត្រឹម \(\frac{\pi}{|b|}\)៖</p>
+            <div class="formula-box">
+                \(f(x) = \sin^2(bx)\) ឬ \(f(x) = |\cos(bx)| \implies T = \frac{\pi}{|b|}\)
             </div>
 
-            <h3 class="topic-title">ករណីសញ្ញាតម្លៃដាច់ខាត <span class="math-inline">|sin(&omega;x)|</span> និង <span class="math-inline">|cos(&omega;x)|</span></h3>
-            <p>តម្លៃដាច់ខាតបង្វិលក្រាហ្វផ្នែកខាងក្រោមអ័ក្សអាប់ស៊ីសឡើងលើ ដូចនេះខួបត្រូវកាត់បន្ថយពាក់កណ្តាលជានិច្ច៖</p>
-            <div class="math-display">
-                p = 
-                <div class="fraction">
-                    <span class="numerator">&pi;</span>
-                    <span class="denominator"><div class="abs"><span class="abs-content">&omega;</span></div></span>
-                </div>
-            </div>
-
-            <h3 class="topic-title">អនុគមន៍សមាសទម្រង់ <span class="math-inline">f(x) = g(h(x))</span></h3>
-            <p>ខួបរបស់អនុគមន៍សមាស <strong>អាស្រ័យទាំងស្រុងលើអនុគមន៍ខាងក្នុង <span class="math-inline">h(x)</span></strong>។ ប្រសិនបើ <span class="math-inline">g</span> ជាអនុគមន៍ទូទៅ (ដូចជា <span class="math-inline">e<sup>x</sup></span>, <span class="math-inline">ln x</span>, <span class="math-inline">&radic;x</span>) ហើយ <span class="math-inline">h(x)</span> ជាអនុគមន៍ត្រីកោណមាត្រ នោះខួបរបស់ <span class="math-inline">f(x)</span> គឺស្មើនឹងខួបរបស់ <span class="math-inline">h(x)</span> ដដែល។</p>
-            <div class="note-box">
-                <strong>ឧទាហរណ៍៖</strong> <span class="math-inline">f(x) = e<sup>cos(3x)</sup></span> មានខួបដូចគ្នានឹង <span class="math-inline">cos(3x)</span> ដែរ គឺ <span class="math-inline">p = 2&pi; / 3</span>។
+            <h3>២. ករណីផលបូក/ផលដកអនុគមន៍ \(f(x) \pm g(x)\)</h3>
+            <p>ខួបរួមគឺជានិរន្តរគូករួមតូចបំផុត (LCM) នៃខួបទាំងពីរ៖ \(T = \text{LCM}(T_1, T_2)\)</p>
+            <div class="example-box">
+                <strong>ឧទាហរណ៍៖</strong> រកខួបនៃ \(F(x) = \sin(2x) + \cos(3x)\)<br>
+                - ខួបនៃ \(\sin(2x)\) គឺ \(T_1 = \frac{2\pi}{2} = \pi\)<br>
+                - ខួបនៃ \(\cos(3x)\) គឺ \(T_2 = \frac{2\pi}{3}\)<br>
+                - នាំឲ្យខួបរួម \(T = \text{LCM}(\pi, \frac{2\pi}{3}) = 2\pi\)។
             </div>
         </div>
     </div>
 
     <div class="level-section level-3">
-        <div class="level-header">Level 3: ផលបូក/ផលគុណលាយគ្នា សមីការអនុគមន៍ និងអាំងតេក្រាលខួប</div>
-        <div class="level-body">
-            <p>យុទ្ធសាស្ត្រដោះស្រាយលំហាត់កម្រិតខ្ពស់ ប្រឡងសិស្សពូកែ ឬការគណនាអាំងតេក្រាលដែលជាប់អនុគមន៍ខួប។</p>
-            
-            <h3 class="topic-title">១. ខួបនៃអនុគមន៍លីនេអ៊ែរលាយគ្នា <span class="math-inline">f(x) = g(x) + h(x)</span></h3>
-            <p>ឧបមាថា <span class="math-inline">g(x)</span> មានខួប <span class="math-inline">p<sub>1</sub></span> និង <span class="math-inline">h(x)</span> មានខួប <span class="math-inline">p<sub>2</sub></span>៖</p>
-            <ul>
-                <li><strong>លក្ខខណ្ឌមានខួប៖</strong> លុះត្រាតែផលធៀប <span class="math-inline">p<sub>1</sub> / p<sub>2</sub> &isin; Q</span> (ជាចំនួនសនិទាន)។ បើវាជាចំនួនអសនិទាន នោះអនុគមន៍សរុប <strong>គ្មានខួបឡើយ</strong>។</li>
-                <li><strong>រូបមន្តខួបរួម៖</strong> <span class="math-inline">p = BCNN(p<sub>1</sub>, p<sub>2</sub>)</span>។ ចំពោះករណីប្រភាគ គេគណនាតាមរូបមន្ត៖</li>
-            </ul>
-            <div class="math-display">
-                BCNN<div class="fraction"><span class="numerator">a</span><span class="denominator">b</span></div>, 
-                <div class="fraction"><span class="numerator">c</span><span class="denominator">d</span></div> = 
-                <div class="fraction">
-                    <span class="numerator">BCNN(a, c)</span>
-                    <span class="denominator">PGCD(b, d)</span>
-                </div>
-            </div>
+        <div class="level-header">
+            <span>កម្រិតទី ៣ ៖ កម្រិតខ្ពស់ (Advanced)</span>
+            <span class="badge">ប្រឡងសិស្សពូកែ / និស្សិតសាកលវិទ្យាល័យ</span>
+        </div>
+        <div class="level-content">
+            <h3>១. លក្ខខណ្ឌអត្ថិភាពនៃខួប (Existence of Period)</h3>
+            <p>ផលបូកនៃអនុគមន៍ខួបពីរ មានខួបរួមលុះត្រាតែផលធៀប \(\frac{T_1}{T_2}\) ជា <strong>ចំនួនសនិទាន</strong> (\(\mathbb{Q}\))។</p>
+            <p style="color: #dc3545;">*សំគាល់៖ \(\sin(x) + \sin(\pi x)\) គ្មានខួបទេ ព្រោះ \(\frac{2\pi}{2} = \pi \notin \mathbb{Q}\)។</p>
 
-            <h3 class="topic-title">២. វិធីដោះស្រាយសមីការអនុគមន៍រកខួប (Functional Equations)</h3>
-            <p>ប្រើវិធីជំនួសតួ <span class="math-inline">x &rarr; x + a</span> ដើម្បីបង្កើតទំនាក់ទំនងវិលជុំ៖</p>
-            <ul>
-                <li>បើ <span class="math-inline">f(x + a) = -f(x)</span> នោះខួបគឺ <span class="math-inline">p = 2a</span></li>
-                <li>បើ <span class="math-inline">f(x + a) = 1 / [1 - f(x)]</span> នោះវាវិលជុំ ៣ ជំហាន នាំឱ្យខួបគឺ <span class="math-inline">p = 3a</span></li>
-                <li>បើ <span class="math-inline">f(x + a) = [1 - f(x)] / [1 + f(x)]</span> នោះវាវិលជុំ ២ ជំហាន នាំឱ្យខួបគឺ <span class="math-inline">p = 2a</span></li>
-                <li>បើ <span class="math-inline">f(x + a) = [f(x) - 1] / [f(x) + 1]</span> នោះវាវិលជុំ ៤ ជំហាន នាំឱ្យខួបគឺ <span class="math-inline">p = 4a</span></li>
-            </ul>
-
-            <h3 class="topic-title">៣. លក្ខណៈខួបជាមួយផ្នែកចំនួនគត់ <span class="math-inline">[x]</span> និងផ្នែកប្រភាគ <span class="math-inline">{x}</span></h3>
-            <ul>
-                <li>ផ្នែកប្រភាគ <span class="math-inline">{kx} = x - [x]</span> មានខួបថេរ <span class="math-inline">p = 1 / |k|</span> ជានិច្ច។</li>
-                <li>អនុគមន៍ទម្រង់ <span class="math-inline">(-1)<sup>[x]</sup></span> ឬ <span class="math-inline">cos(&pi;[x])</span> ប្តូរសញ្ញារាល់ពេល <span class="math-inline">x</span> កើនឡើង <span class="math-inline">1</span> ឯកតា នាំឱ្យខួបតូចបំផុតរបស់វាគឺ <span class="math-inline">p = 2</span>។</li>
-            </ul>
-
-            <h3 class="topic-title">៤. លក្ខណៈស្នូលក្នុងអាំងតេក្រាលខួប</h3>
-            <p>បើ <span class="math-inline">f(x)</span> មានខួប <span class="math-inline">p</span> នោះគេបានលក្ខណៈសំខាន់ៗ៖</p>
-            <div class="math-display">
-                <span class="integral-sign">&int;</span><div class="int-limit"><span>a+p</span><span>a</span></div> f(x)dx = 
-                <span class="integral-sign">&int;</span><div class="int-limit"><span>p</span><span>0</span></div> f(x)dx
-            </div>
-            <div class="math-display">
-                <span class="integral-sign">&int;</span><div class="int-limit"><span>np</span><span>0</span></div> f(x)dx = 
-                n <span class="integral-sign">&int;</span><div class="int-limit"><span>p</span><span>0</span></div> f(x)dx 
-                <span style="font-size: 16px; margin-left: 10px;">(n &isin; N)</span>
-            </div>
-            <div class="note-box">
-                <strong>គន្លឹះពិសេស៖</strong> បើ <span class="math-inline">f(x + a) = -f(x)</span> នោះខួបគឺ <span class="math-inline">2a</span> ហើយអាំងតេក្រាលលើមួយខួបពេញ <span class="math-inline">&int;</span> (ពី <span class="math-inline">0</span> ទៅ <span class="math-inline">2a</span>) គឺស្មើនឹង <span class="math-inline">0</span> ជានិច្ច។
+            <h3>២. ករណីពិសេសបំពេញគ្នា (Symmetric functions)</h3>
+            <p>ចំពោះអនុគមន៍ខ្លះ ថ្វីត្បិតតែតាមរូបមន្តរកឃើញ LCM ធំ ប៉ុន្តែដោយសារលក្ខណៈឆ្លុះ វានាំឲ្យមានខួបតូចជាង LCM នោះទៅទៀត។</p>
+            <div class="example-box">
+                <strong>ឧទាហរណ៍ពិសេស៖</strong> \(f(x) = |\sin x| + |\cos x|\)<br>
+                តាមរូបមន្តកម្រិត២៖ \(T_1 = \pi, T_2 = \pi \implies \text{LCM} = \pi\)។<br>
+                ប៉ុន្តែបើផ្ទៀងផ្ទាត់តាមនិយមន័យជាមួយ \(T = \frac{\pi}{2}\)៖<br>
+                \(f(x + \frac{\pi}{2}) = |\sin(x + \frac{\pi}{2})| + |\cos(x + \frac{\pi}{2})| = |\cos x| + |- \sin x| = f(x)\)។<br>
+                ដូចនេះ ខួបពិតប្រាកដតូចបំផុតគឺ <strong>\(T = \frac{\pi}{2}\)</strong>។
             </div>
         </div>
     </div>
-
 </div>
 
 </body>
