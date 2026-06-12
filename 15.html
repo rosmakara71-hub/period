@@ -14,16 +14,18 @@
             color: #2c3e50;
             padding: 20px;
         }
-        .wrapper {
+        .wrapper, .container {
             max-width: 950px;
             margin: auto;
             background: #fff;
             padding: 40px;
             border-radius: 12px;
             box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
         }
         h1 { color: #0056b3; text-align: center; margin-bottom: 30px; border-bottom: 3px solid #0056b3; padding-bottom: 15px;}
         h2 { color: #e67e22; border-bottom: 1px solid #ddd; padding-bottom: 5px; margin-top: 35px; }
+        h3 { color: #2c3e50; }
         .grid-table {
             width: 100%;
             border-collapse: collapse;
@@ -51,6 +53,20 @@
             border-left: 5px solid #17a2b8;
             border-radius: 4px;
             margin: 15px 0;
+        }
+        .math-box {
+            background: #eef2f3;
+            padding: 15px;
+            border-left: 5px solid #34495e;
+            margin: 20px 0;
+            font-size: 1.1rem;
+        }
+        .ex-item {
+            background: #fff9e6;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 4px solid #f1c40f;
+            margin-bottom: 15px;
         }
     </style>
 </head>
@@ -86,7 +102,7 @@
                 <td>\(T = \frac{\pi}{|b|}\)</td>
             </tr>
             <tr>
-                <td><strong>អនុគមន៍ផ្នែកគត់ \(\{bx\}\)</strong></td>
+                <td><strong>អនុគមន៍ផ្នែកប្រភាគ \(\{bx\}\)</strong></td>
                 <td colspan="2" style="text-align: center;">\(T = \frac{1}{|b|}\)</td>
             </tr>
         </tbody>
@@ -115,7 +131,7 @@
     <p>រាល់អនុគមន៍ពហុធាទាំងអស់ (\(x^2, x^3...\)), អនុគមន៍លោការីត (\(\ln x\)), និងអនុគមន៍អិចស្ប៉ូណង់ស្យែល (\(e^x\)) គឺ<strong>មិនមែនជាអនុគមន៍ខួបឡើយ</strong> ព្រោះក្រាហ្វរបស់វាមិនមានលក្ខណៈដដែលៗជារង្វង់នោះទេ។</p>
 </div>
 
-    div class="container">
+<div class="container">
     <h1>អនុគមន៍ផ្នែកគត់ (Floor Function)</h1>
     <p><strong>អនុគមន៍ផ្នែកគត់</strong> នៃចំនួនពិត \(x\) គឺជាចំនួនគត់ធំបំផុត ដែលតូចជាង ឬស្មើ \(x\)។ គេតំណាងដោយនិមិត្តសញ្ញា \(\lfloor x \rfloor\) ឬ \([x]\)។</p>
     
@@ -130,7 +146,6 @@
             \(\lfloor 3.7 \rfloor = 3\)<br>
             \(\lfloor 0.95 \rfloor = 0\)
         </div>
-        <br>
         <div class="ex-item" style="background: #fde8e8; border-left-color: #e74c3c;">
             <strong>ករណីចំនួនអវិជ្ជមាន (ប្រយ័ត្នច្រឡំ)៖</strong><br>
             \(\lfloor -1.2 \rfloor = -2\) <small>(ព្រោះ \(-2 \le -1.2\))</small><br>
@@ -144,5 +159,6 @@
         <li>\(\lfloor x + k \rfloor = \lfloor x \rfloor + k\) (ចំពោះ \(k\) ជាចំនួនគត់)</li>
     </ul>
 </div>
+
 </body>
 </html>
