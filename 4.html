@@ -682,7 +682,7 @@
         <div class="solution-title">💡 ដំណោះស្រាយលម្អិត៖</div>
         - ខួបនៃ $\sin(4x)$ គឺ $p_1 = \frac{2\pi}{4} = \frac{\pi}{2}$<br>
         - ខួបនៃ $\sin(8x)$ គឺ $p_2 = \frac{2\pi}{8} = \frac{\pi}{4}$<br>
-        - ខួបសរុបគឺ $BCNN(p_1, p_2) = BCNN\left(\frac{\pi}{2}, \frac{\pi}{4}\right) = $\frac{\pi}{2}$។
+        - ខួបសរុបគឺ $BCNN(p_1, p_2) = BCNN\left(\frac{\pi}{2}, \frac{\pi}{4}\right) = \frac{\pi}{2}$។
     </div>
 </div>
 
@@ -692,7 +692,7 @@
         <span class="points">(៥ ពិន្ទុ)</span>
     </div>
     <div class="options-container">
-        <label class="option-label"><input type="radio" name="q" value="W1"> $5$p</label>
+        <label class="option-label"><input type="radio" name="q" value="W1"> $5p$</label>
         <label class="option-label"><input type="radio" name="q" value="C" data-correct="true"> $\frac{p}{5}$</label>
         <label class="option-label"><input type="radio" name="q" value="W2"> $p$</label>
         <label class="option-label"><input type="radio" name="q" value="W3"> $\frac{p}{25}$</label>
@@ -737,7 +737,7 @@
     </div>
 </div>
 
-                </div>
+            </div>
 
             <div class="navigation-box" id="navBox">
                 <button type="button" class="nav-btn" id="prevBtn" onclick="changeQuestion(-1)" disabled>⏮ ថយក្រោយ</button>
@@ -782,7 +782,22 @@
 
             shuffleArray(cards);
             container.innerHTML = '';
-            cards.forEach(card => container.appendChild(card));
+            
+            cards.forEach((card, index) => {
+                // ដាក់លេខរៀងថ្មី បន្ទាប់ពីច្របល់រួច (លំហាត់ទី ១, ២, ៣...)
+                const qNumSpan = card.querySelector('.q-number');
+                if (qNumSpan) {
+                    qNumSpan.innerText = 'លំហាត់ទី ' + (index + 1) + '៖ ';
+                }
+                
+                // ជួសជុលបញ្ហា name="q" ជាន់គ្នា ដោយប្តូរឈ្មោះវាទៅជា q_0, q_1, q_2... ទៅតាម Index
+                const options = Array.from(card.querySelectorAll('.option-label input[type="radio"]'));
+                options.forEach(radio => {
+                    radio.name = 'q_' + index;
+                });
+                
+                container.appendChild(card);
+            });
 
             shuffledCards = cards;
             shuffledCards[0].classList.add('active');
