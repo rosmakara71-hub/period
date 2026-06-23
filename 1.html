@@ -756,13 +756,46 @@
         // 🌟 ចាប់ផ្តើមកត់ត្រាម៉ោងភ្លាមៗនៅពេលសិស្សបើកទំព័រវិញ្ញាសា
         let startTime = new Date(); 
 
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
+        function initQuiz() {
+    const container = document.getElementById('questionsContainer');
+    const cards = Array.from(container.getElementsByClassName('question-card'));
+    
+    totalExamPoints = cards.length * 5;
+    document.getElementById('totalPointsDisplay').innerText = totalExamPoints;
+
+    // ១. ច្របល់សំណួរ (Shuffle Cards) ជាមុនសិន
+    shuffleArray(cards);
+    container.innerHTML = '';
+
+    cards.forEach((card, index) => {
+        // ២. ដាក់លេខរៀងថ្មី បន្ទាប់ពីច្របល់រួច (លំហាត់ទី ១, ២, ៣...)
+        const qNumSpan = card.querySelector('.q-number');
+        if (qNumSpan) {
+            qNumSpan.innerText = 'លំហាត់ទី ' + (index + 1) + '៖ ';
         }
+
+        const optionsContainer = card.querySelector('.options-container');
+        if (optionsContainer) {
+            const options = Array.from(optionsContainer.getElementsByClassName('option-label'));
+            
+            // ៣. ច្របល់ជម្រើសចម្លើយ
+            shuffleArray(options); 
+            
+            options.forEach(opt => {
+                const radio = opt.querySelector('input[type="radio"]');
+                // ៤. ជួសជុលបញ្ហា name="q" ជាន់គ្នា ដោយប្តូរឈ្មោះវាទៅជា q_0, q_1, q_2...
+                if (radio) radio.name = 'q_' + index; 
+                optionsContainer.appendChild(opt);
+            });
+        }
+        container.appendChild(card);
+    });
+
+    shuffledCards = cards;
+    shuffledCards[0].classList.add('active');
+    
+    updateNavigation();
+}
 
         function initQuiz() {
             const container = document.getElementById('questionsContainer');
