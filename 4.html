@@ -152,6 +152,7 @@
             cursor: pointer;
             transition: all 0.2s;
             font-size: 15px;
+            user-select: none; /* បង្ការកុំឲ្យសិស្សអូសជាប់ Highlight អក្សរ */
         }
         .option-label:hover {
             background: #f1f5f9;
@@ -161,7 +162,28 @@
             margin-right: 12px;
             transform: scale(1.2);
             cursor: pointer;
+            pointer-events: auto;
         }
+        /* បង្ខំឲ្យ MathJax មិនទាក់ទាញ Click ដើម្បីងាយស្រួលចុចលើ Label */
+        .option-label * {
+            pointer-events: none;
+        }
+        /* ពណ៌ពេលសិស្សចុចជ្រើសរើសចម្លើយ */
+        .option-label.selected-option {
+            background: #e0f2fe;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 1px #3b82f6;
+        }
+        /* ពណ៌បញ្ជាក់ចម្លើយត្រូវនិងខុសពេល Submit */
+        .option-label.correct-option {
+            background: #d1fae5 !important;
+            border-color: #10b981 !important;
+        }
+        .option-label.wrong-option {
+            background: #fee2e2 !important;
+            border-color: #ef4444 !important;
+        }
+
         .solution-box {
             display: none;
             margin-top: 20px;
@@ -256,8 +278,8 @@
         .grade-E { background-color: #f3e8ff; color: #6b21a8; border: 2px solid #c084fc; }
         .grade-F { background-color: #fee2e2; color: #991b1b; border: 2px solid #f87171; }
 
-        .correct-flash { background: #d1fae5 !important; border-color: #10b981 !important; }
-        .incorrect-flash { background: #fee2e2 !important; border-color: #ef4444 !important; }
+        .correct-flash { background: #f0fdf4 !important; border-color: #22c55e !important; }
+        .incorrect-flash { background: #fef2f2 !important; border-color: #ef4444 !important; }
     </style>
 <a href="index.html" style="padding: 8px 16px; background: #e2e8f0; color: #333; text-decoration: none; border-radius: 5px; font-family: sans-serif;">
     ⬅ ថយក្រោយ
@@ -802,6 +824,22 @@
             shuffledCards = cards;
             shuffledCards[0].classList.add('active');
             
+            // ដាក់ Event Listener ដើម្បីប្តូរពណ៌ Label ពេលចុចជ្រើសរើស
+            const allRadios = document.querySelectorAll('.option-label input[type="radio"]');
+            allRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const currentCard = this.closest('.question-card');
+                    // លុបពណ៌ពីជម្រើសទាំងអស់ក្នុងលំហាត់តែមួយ
+                    currentCard.querySelectorAll('.option-label').forEach(lbl => {
+                        lbl.classList.remove('selected-option');
+                    });
+                    // បន្ថែមពណ៌ឲ្យជម្រើសដែលកំពុងរើស
+                    if (this.checked) {
+                        this.closest('.option-label').classList.add('selected-option');
+                    }
+                });
+            });
+
             updateNavigation();
         }
 
@@ -880,15 +918,30 @@
                 if (radioInput) {
                     const qName = radioInput.name;
                     const checkedOption = card.querySelector(`input[name="${qName}"]:checked`);
+                    const correctOption = card.querySelector(`input[name="${qName}"][data-correct="true"]`);
                     const solutionBox = card.querySelector('.solution-box');
                     
                     card.classList.add('active');
                     if (solutionBox) solutionBox.style.display = 'block';
 
-                    if (checkedOption && checkedOption.getAttribute('data-correct') === 'true') {
-                        score += 5;
-                        card.classList.add('correct-flash');
+                    // បិទមិនឲ្យសិស្សកែប្រែចម្លើយបានទៀតទេពេល Submit រួច
+                    card.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
+
+                    // បង្ហាញពណ៌បៃតងលើចម្លើយដែលជាចម្លើយត្រឹមត្រូវដាច់ខាត
+                    if (correctOption) {
+                        correctOption.closest('.option-label').classList.add('correct-option');
+                    }
+
+                    if (checkedOption) {
+                        if (checkedOption.getAttribute('data-correct') === 'true') {
+                            score += 5;
+                            // Option is already colored green above
+                        } else {
+                            // បង្ហាញពណ៌ក្រហមលើចម្លើយដែលសិស្សរើសខុស
+                            checkedOption.closest('.option-label').classList.add('wrong-option');
+                        }
                     } else {
+                        // ប្រសិនបើសិស្សរំលងមិនបានឆ្លើយប្រអប់នេះ
                         card.classList.add('incorrect-flash');
                     }
                 }
