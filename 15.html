@@ -1,164 +1,111 @@
+
 <!DOCTYPE html>
 <html lang="km">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>មេរៀនគ្រប់ជ្រុងជ្រោយ៖ ខួបនៃអនុគមន៍</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/polyfill/3.25.1/polyfill.min.js"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <title>លក្ខណៈខួបនៃអនុគមន៍</title>
+    
+    <!-- ប្រើ Tailwind CSS សម្រាប់ការតុបតែង (Styling) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- ប្រើ Google Fonts (Hanuman) សម្រាប់អក្សរខ្មែរឲ្យកាន់តែច្បាស់ល្អ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hanuman:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
         body {
-            font-family: 'Khmer OS Battambang', 'Segoe UI', sans-serif;
-            line-height: 1.8;
-            background-color: #f4f6f9;
-            color: #2c3e50;
-            padding: 20px;
+            font-family: 'Hanuman', serif;
         }
-        .wrapper, .container {
-            max-width: 950px;
-            margin: auto;
-            background: #fff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
-        }
-        h1 { color: #0056b3; text-align: center; margin-bottom: 30px; border-bottom: 3px solid #0056b3; padding-bottom: 15px;}
-        h2 { color: #e67e22; border-bottom: 1px solid #ddd; padding-bottom: 5px; margin-top: 35px; }
-        h3 { color: #2c3e50; }
-        .grid-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        .grid-table th, .grid-table td {
-            border: 1px solid #dee2e6;
-            padding: 12px;
-            text-align: left;
-        }
-        .grid-table th { background-color: #0056b3; color: white; }
-        .grid-table tr:nth-child(even) { background-color: #f8f9fa; }
-        .note-box {
-            background-color: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-left: 5px solid #dc3545;
-            border-radius: 4px;
-            margin: 15px 0;
-        }
-        .special-box {
-            background-color: #d1ecf1;
-            color: #0c5460;
-            padding: 15px;
-            border-left: 5px solid #17a2b8;
-            border-radius: 4px;
-            margin: 15px 0;
-        }
-        .math-box {
-            background: #eef2f3;
-            padding: 15px;
-            border-left: 5px solid #34495e;
-            margin: 20px 0;
-            font-size: 1.1rem;
-        }
-        .ex-item {
-            background: #fff9e6;
-            padding: 15px;
-            border-radius: 4px;
-            border-left: 4px solid #f1c40f;
-            margin-bottom: 15px;
+        /* តុបតែងប្រអប់រូបមន្ត (Display Math) ឲ្យមានរង្វង់ជុំវិញបន្តិច */
+        .math-display-container {
+            background-color: #f8fafc;
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0.25rem;
+            overflow-x: auto;
         }
     </style>
+
+    <!-- ការកំណត់រចនាសម្ព័ន្ធសម្រាប់ MathJax (សម្រាប់បំប្លែង LaTeX ទៅជារូបមន្ត) -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    
+    <!-- ទាញយក MathJax -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
 </head>
-<body>
+<body class="bg-gray-100 min-h-screen py-10 px-4 sm:px-6 lg:px-8 text-gray-800 leading-relaxed">
 
-<div class="wrapper">
-    <h1>តារាងវិភាគ និងរូបមន្តខួបនៃអនុគមន៍គ្រប់ករណី (Complete Guide)</h1>
-    
-    <p>ខាងក្រោមនេះជាតារាងសង្ខេបលំអិតគ្រប់ករណីទាំងអស់នៃខួបអនុគមន៍ទោល ដែលជួបប្រទះក្នុងគណិតវិទ្យាថ្នាក់វិទ្យាល័យ និងឧត្តមសិក្សា៖</p>
+    <!-- ប្រអប់ឯកសារ (Document Container) -->
+    <div class="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-xl shadow-lg">
+        
+        <!-- ចំណងជើងឯកសារ -->
+        <header class="border-b-2 border-gray-200 pb-6 mb-8 text-center">
+            <h1 class="text-2xl md:text-3xl font-bold text-blue-800 mb-2">ការកំណត់ខួបនៃអនុគមន៍</h1>
+            <p class="text-gray-500 text-sm">រៀបចំដោយប្រើប្រាស់ HTML និង MathJax</p>
+        </header>
 
-    <table class="grid-table">
-        <thead>
-            <tr>
-                <th>ប្រភេទទម្រង់អនុគមន៍</th>
-                <th>ករណីស្វ័យគុណសេស (\(n\) សេស) ឬគ្មានស្វ័យគុណ</th>
-                <th>ករណីស្វ័យគុណគូ (\(n\) គូ) ឬមានតម្លៃដាច់ខាត</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>\(\sin^n(bx+c)\) / \(\cos^n(bx+c)\)</strong></td>
-                <td>\(T = \frac{2\pi}{|b|}\)</td>
-                <td>\(T = \frac{\pi}{|b|}\)</td>
-            </tr>
-            <tr>
-                <td><strong>\(\tan^n(bx+c)\) / \(\cot^n(bx+c)\)</strong></td>
-                <td>\(T = \frac{\pi}{|b|}\)</td>
-                <td>\(T = \frac{\pi}{|b|}\)</td>
-            </tr>
-            <tr>
-                <td><strong>\(\sec^n(bx+c)\) / \(\csc^n(bx+c)\)</strong></td>
-                <td>\(T = \frac{2\pi}{|b|}\)</td>
-                <td>\(T = \frac{\pi}{|b|}\)</td>
-            </tr>
-            <tr>
-                <td><strong>អនុគមន៍ផ្នែកប្រភាគ \(\{bx\}\)</strong></td>
-                <td colspan="2" style="text-align: left;">\(T = \frac{1}{|b|}\)</td>
-            </tr>
-        </tbody>
-    </table>
+        <!-- ខ្លឹមសារឯកសារ -->
+        <article class="space-y-6 text-[16px] md:text-[18px]">
+            
+            <p>
+                ការកំណត់ខួបនៃអនុគមន៍ដែលកើតចេញពី <strong>ផលបូក ផលដក ផលគុណ</strong> ឬ <strong>ផលចែក</strong> នៃអនុគមន៍ពីរ (ឬច្រើន) គឺជាចំណុចសំខាន់មួយ ជាពិសេសនៅក្នុងមេរៀនត្រីកោណមាត្រ។
+            </p>
+            
+            <p>
+                ឧបមាថាយើងមានអនុគមន៍ $f(x)$ មានខួប $T_1$ និងអនុគមន៍ $g(x)$ មានខួប $T_2$។
+            </p>
 
-    <h2>ករណីផលបូកដកច្រើនអនុគមន៍ និងលក្ខខណ្ឌពិសេស</h2>
-    
-    <h3>១. វិធីសាស្ត្ររក LCM នៃប្រភាគ</h3>
-    <p>នៅពេលរកខួបឃើញជាប្រភាគ ឧទាហរណ៍ \(T_1 = \frac{a}{b}\) និង \(T_2 = \frac{c}{d}\) នោះខួបរួមគឺ៖</p>
-    <div style="text-align: center; background: #eee; padding: 10px; border-radius: 5px;">
-        \[T = \frac{\text{LCM}(a, c)}{\text{GCD}(b, d)}\]
+            <h2 class="text-xl md:text-2xl font-bold text-gray-900 mt-8 mb-4">
+                ១. គោលការណ៍ទូទៅ (សម្រាប់ផលបូក ផលដក ផលគុណ និងផលចែក)
+            </h2>
+
+            <p>
+                អនុគមន៍ថ្មី $y = f(x) \pm g(x)$ ឬ $y = f(x) \cdot g(x)$ ឬ $y = \frac{f(x)}{g(x)}$ នឹងមានខួប លុះត្រាតែផលធៀបនៃខួបទាំងពីរ $\frac{T_1}{T_2}$ គឺជា <strong>ចំនួនសនិទាន (Rational number)</strong> មានន័យថាវាអាចសរសេរជារាងប្រភាគនៃចំនួនគត់បាន។
+            </p>
+
+            <p>
+                ប្រសិនបើលក្ខខណ្ឌនេះត្រូវបានផ្ទៀងផ្ទាត់ នោះខួប $T$ នៃអនុគមន៍ថ្មី គឺជា <strong>ពហុគុណរួមតូចបំផុត (LCM)</strong> នៃខួប $T_1$ និង $T_2$៖
+            </p>
+
+            <div class="math-display-container">
+                $$T = \text{LCM}(T_1, T_2)$$
+            </div>
+
+            <h3 class="text-lg font-bold text-gray-800 mt-6 mb-3">
+                គន្លឹះក្នុងការគណនា LCM នៃប្រភាគ៖
+            </h3>
+
+            <p>
+                ដោយសារខួបនៃអនុគមន៍ត្រីកោណមាត្រភាគច្រើនជារាងប្រភាគដែលមានជាប់ $\pi$ រូបមន្តសម្រាប់រក LCM នៃប្រភាគពីរគឺ៖
+            </p>
+
+            <div class="math-display-container">
+                $$\text{LCM}\left(\frac{a}{b}, \frac{c}{d}\right) = \frac{\text{LCM}(a, c)}{\text{GCD}(b, d)}$$
+            </div>
+            
+            <p class="text-gray-600 italic text-sm mt-2">
+                (យកពហុគុណរួមតូចបំផុតនៃភាគយក ចែកនឹងតួចែករួមធំបំផុតនៃភាគបែង)
+            </p>
+
+        </article>
+        
+        <footer class="mt-12 pt-6 border-t border-gray-200 text-center text-gray-400 text-sm">
+            &copy; ឯកសារគណិតវិទ្យាត្រូវបានបង្កើតឡើងយ៉ាងត្រឹមត្រូវ។
+        </footer>
     </div>
-
-    <div class="note-box">
-        <strong>⚠️ ករណីប្រយ័ត្ន (អត្ថិភាពនៃខួប)៖</strong> 
-        បើផលធៀប \(\frac{T_1}{T_2}\) មិនមែនជាចំនួនសនិទានទេ នោះអនុគមន៍លទ្ធផលគឺ <strong>"គ្មានខួបឡើយ"</strong>។<br>
-        <em>ឧទាហរណ៍៖</em> \(f(x) = \sin(3x) + \cos(\pi x)\) គឺគ្មានខួបទេ ព្រោះ \(\frac{2\pi/3}{2} = \frac{\pi}{3} \notin \mathbb{Q}\)។
-    </div>
-
-    <div class="special-box">
-        <strong>💡 ករណីពិសេសបំពេញគ្នា (Symmetric Trick)៖</strong><br>
-        ចំពោះអនុគមន៍ \(f(x) = |\sin x| + |\cos x|\) បើគិតតាមរូបមន្តធម្មតាគឺ \(T = \pi\)។ ប៉ុន្តែដោយសារលក្ខណៈឆ្លុះពិសេស វារក្សាទម្រង់ដដែលនៅពេលរំកិលត្រឹម \(\frac{\pi}{2}\)។ ដូចនេះខួបពិតប្រាកដរបស់វាគឺ <strong>\(T = \frac{\pi}{2}\)</strong>។
-    </div>
-
-    <h2>សន្និដ្ឋានចំពោះអនុគមន៍គ្មានខួប</h2>
-    <p>រាល់អនុគមន៍ពហុធាទាំងអស់ (\(x^2, x^3...\)), អនុគមន៍លោការីត (\(\ln x\)), និងអនុគមន៍អិចស្ប៉ូណង់ស្យែល (\(e^x\)) គឺ<strong>មិនមែនជាអនុគមន៍ខួបឡើយ</strong> ព្រោះក្រាហ្វរបស់វាមិនមានលក្ខណៈដដែលៗជារង្វង់នោះទេ។</p>
-</div>
-
-<div class="container">
-    <h1>អនុគមន៍ផ្នែកគត់ (Floor Function)</h1>
-    <p><strong>អនុគមន៍ផ្នែកគត់</strong> នៃចំនួនពិត \(x\) គឺជាចំនួនគត់ធំបំផុត ដែលតូចជាង ឬស្មើ \(x\)។ គេតំណាងដោយនិមិត្តសញ្ញា \(\lfloor x \rfloor\) ឬ \([x]\)។</p>
-    
-    <div class="math-box">
-        ន័យគណិតវិទ្យា៖ បើ \(n \le x < n + 1\) នោះ \(\lfloor x \rfloor = n\) (ដែល \(n\) ជាចំនួនគត់)
-    </div>
-
-    <h2>ឧទាហរណ៍ជាក់ស្តែង</h2>
-    <div>
-        <div class="ex-item">
-            <strong>ករណីចំនួនវិជ្ជមាន៖</strong><br>
-            \(\lfloor 3.7 \rfloor = 3\)<br>
-            \(\lfloor 0.95 \rfloor = 0\)
-        </div>
-        <div class="ex-item" style="background: #fde8e8; border-left-color: #e74c3c;">
-            <strong>ករណីចំនួនអវិជ្ជមាន (ប្រយ័ត្នច្រឡំ)៖</strong><br>
-            \(\lfloor -1.2 \rfloor = -2\) <small>(ព្រោះ \(-2 \le -1.2\))</small><br>
-            \(\lfloor -0.4 \rfloor = -1\)
-        </div>
-    </div>
-
-    <h2>លក្ខណៈសម្បត្តិ</h2>
-    <ul>
-        <li>\(\lfloor x \rfloor \le x < \lfloor x \rfloor + 1\)</li>
-        <li>\(\lfloor x + k \rfloor = \lfloor x \rfloor + k\) (ចំពោះ \(k\) ជាចំនួនគត់)</li>
-    </ul>
-</div>
 
 </body>
 </html>
